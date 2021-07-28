@@ -1,0 +1,14 @@
+$default-font-size: 16;
+
+// We use these to define default font styles
+$font-style-normal: normal !default;
+
+// We use these to define default font weights
+$font-weight-light: 100 !default;
+$font-weight-regular: 300 !default;
+$font-weight-bold: 500 !default;
+
+$fonts: (
+  'google-sans': #{'Google Sans', 'Roboto', 'Helvetica', 'Arial', san-serif},
+  'roboto': #{'Roboto', 'Helvetica', 'Arial', san-serif}
+);

@@ -1,0 +1,84 @@
+/* Box sizing rules */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* Remove default padding */
+ul,
+ol {
+  padding: 0;
+}
+
+/* Remove default margin */
+body,
+h1,
+h2,
+h3,
+h4,
+p,
+ul,
+ol,
+li,
+figure,
+figcaption,
+blockquote,
+dl,
+dd {
+  margin: 0;
+  padding: 0;
+}
+
+/* Remove list styles on ul, ol elements with a class attribute */
+ul,
+ol{
+  list-style: none;
+}
+
+/* remove anchor tag text decoration */
+a {
+  text-decoration: none;
+}
+
+/* A elements that don't have a class get default styles */
+a:not([class]) {
+  text-decoration-skip-ink: auto;
+}
+
+/* Make images easier to work with */
+// Get rid of gap under images by making them display: inline-block; by default
+img {
+  -ms-interpolation-mode: bicubic;
+  display: inline-block;
+  height: auto;
+  max-width: 100%;
+  vertical-align: middle;
+}
+
+/* Natural flow and rhythm in articles by default */
+article > * + * {
+  margin-top: 1em;
+}
+
+/* Inherit fonts for inputs and buttons */
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+/*
+ * Prevent superscript from affecting line-height. Taken from:
+ * https://css-tricks.com/snippets/css/prevent-superscripts-and-subscripts-from-affecting-line-height/
+ */
+sup {
+  vertical-align: baseline;
+  position: relative;
+  top: -0.4em;
+}

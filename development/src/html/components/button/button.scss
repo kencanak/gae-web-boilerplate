@@ -1,0 +1,111 @@
+@import '../../../styles/common';
+
+$module: 'gwb-button';
+
+.#{$module} {
+  position: relative;
+  display: inline-flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  justify-content: space-around;
+
+  // reset border before applying custom style
+  border: 0;
+  border-radius: rem(4);
+
+  width: fit-content;
+  min-height: rem(46);
+
+  cursor: pointer;
+
+  padding: 0 rem(24);
+  text-decoration: none;
+  overflow: hidden;
+  color: color('grey-800');
+
+  box-sizing: border-box;
+
+  font-family: font('google-sans');
+  font-size: rem(16);
+  font-weight: $font-weight-regular;
+
+  letter-spacing: rem(.5);
+  line-height: 1.1;
+  background-color: color('grey-0');
+
+  transition: background-color .2s, box-shadow .2s, color .2s;
+
+  &:hover {
+    background-color: color('grey-50');
+  }
+
+  &:focus {
+    outline: none;
+    transition: none;
+
+    background-color: color('grey-50');
+  }
+
+  &:active {
+    background-color: color('grey-50');
+    box-shadow: none;
+  }
+
+  &__icon {
+    color: color('blue-500');
+    width: rem(16);
+    height: rem(16);
+
+    margin-left: rem(8);
+  }
+
+  &--medium-emphasis {
+    border-style: solid;
+    border-radius: rem(24);
+    border-width: rem(1);
+  }
+
+  &--high-emphasis {
+    background-color: color('blue-500');
+    color: color('grey-0');
+
+    &:hover,
+    &:focus,
+    &:active {
+      color: color('grey-0');
+      background-color: color('blue-600');
+    }
+
+    &:focus {
+      box-shadow: 0 0 0 rem(1) color('grey-100');
+    }
+
+    .#{$module}__icon {
+      color: color('grey-0');
+    }
+  }
+
+  &--medium-emphasis {
+    border-color: color('grey-500');
+
+    &:hover,
+    &:focus,
+    &:active {
+      color: color('blue-900');
+      border-color: color('blue-700');
+
+      .gwb-button__icon {
+        color: color('blue-900');
+      }
+    }
+
+    &:focus {
+      box-shadow: 0 0 0 rem(1) color('grey-100');
+    }
+  }
+
+  &--link {
+    text-decoration: underline;
+    padding: 0;
+  }
+}

@@ -1,0 +1,7 @@
+User-agent: *
+
+{% for disallow in robots.disallows %}
+Disallow: {{disallow}}
+{% endfor %}
+
+Sitemap: {{global.site_canonical_url}}/sitemap.xml

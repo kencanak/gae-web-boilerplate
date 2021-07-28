@@ -1,0 +1,29 @@
+@use 'sass:math';
+
+/**
+ * Returns hex value of color in map.
+ * @param {string} $name
+ * @return hex value
+ */
+@function color($name) {
+  @return map-get($colors, $name);
+}
+
+/**
+ * Returns font family value in map.
+ * @param {string} $name
+ * @return hex value
+ */
+@function font($name) {
+  @return map-get($fonts, $name);
+}
+
+/**
+ * Calculates and returns value of pixels in REM (root EM).
+ * @param {number} $pixels
+ * @param {number} $font-size Font size to divide by; defaults to 16
+ * @return Value in REM. Example: 16 = 1rem
+ */
+@function rem($pixels, $font-size: $default-font-size) {
+  @return math.div($pixels, $font-size) * 1rem;
+}

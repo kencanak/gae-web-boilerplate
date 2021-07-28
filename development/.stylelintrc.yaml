@@ -1,0 +1,87 @@
+plugins:
+  stylelint-scss
+defaultSeverity: warning
+rules:
+  block-closing-brace-newline-after:
+    - always
+    - ignoreAtRules:
+      - if
+      - else
+  block-no-empty: true
+  color-hex-length: short
+  color-no-invalid-hex: true
+  declaration-block-no-duplicate-properties:
+    - true
+    - ignore: ["consecutive-duplicates-with-different-values"]
+  declaration-block-no-redundant-longhand-properties:
+    - true
+    # Original message is:
+    # "Expected shorthand property "<property>""
+    - message: |
+        Combine related declarations into shorthand properties (declaration-block-no-redundant-longhand-properties)
+        go/htmlcssstyle#Shorthand_Properties
+  declaration-block-no-shorthand-property-overrides: true
+  declaration-no-important:
+    - true
+    # Original message is:
+    # "Unexpected !important"
+    - message: |
+        "!important" declarations are not allowed (declaration-no-important)
+        go/htmlcssstyle#Important_Declarations
+  function-calc-no-unspaced-operator: true
+  function-name-case: lower
+  function-url-no-scheme-relative: true
+  function-url-quotes: never
+  media-feature-name-case: lower
+  # Need to check if units are required for some flex properties in some browsers.
+  # length-zero-no-unit
+  no-duplicate-at-import-rules: true
+  # Requires known-css-parser, not yet imported into third_party.
+  # property-no-unknown: true
+  rule-empty-line-before:
+    - always
+    - ignore:
+      - after-comment
+      - first-nested
+      - inside-block
+  selector-class-pattern:
+    - "^(?!mdc-)"
+    # Original message is:
+    # "Expected class selector "<class>" to match specified pattern (selector-class-pattern)"
+    - message: |
+        Styling Material Web components ('.mdc-' classes) is not allowed
+        go/gm-web-css-best-practices#styling-with-mdc-class-names
+  selector-max-id:
+    - 0
+    # Original message is:
+    # "Expected "<selector>" to have no more than 0 ID selectors"
+    - message: |
+        ID selectors are not allowed (selector-max-id)
+        go/htmlcssstyle#ID_Selectors
+  selector-pseudo-class-no-unknown: true
+  selector-pseudo-element-no-unknown:
+    - true
+    - ignorePseudoElements:
+        ng-deep
+  selector-type-case: lower
+  scss/at-rule-no-unknown:
+    - true
+    - ignoreAtRules:
+      # Allow GSS at-rules.
+      - "provide"
+      - "require"
+      # go/exporting-stv
+      - "stv-export"
+      # go/sass-stack-variables
+      - "stv-toggled"
+      - "stv-else"
+  # Disable until a few bugs are worked out, e.g.
+  # https://github.com/kristerkari/stylelint-scss/issues/452, b/146236561, b/148542732
+  # scss/operator-no-unspaced: true
+  shorthand-property-no-redundant-values: true
+  unit-no-unknown:
+    - true
+    - ignoreUnits:
+      - /^[-+][\d$(]/
+  # This lint rule is enforced on map keys, which we may not want now, and has caused confusion.
+  # value-keyword-case: lower
