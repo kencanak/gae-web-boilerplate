@@ -18,3 +18,25 @@ A simple and boilerplate to build web application (vanilla + typescript) and dep
 3. SASS for CSS pre-processor
 4. Gulp
 5. BrowserSync
+
+## Code structure
+Project divided into 2 section:
+
+### development (front-end)
+this is a typical vanilla web scafolding, any UI development should be done in this folder. For more info on how the front-end code being structured, please refer to `development/README.md`
+
+### back-end
+Typical Flask app code structure. This can be expanded, should you need to add API end points, you could simply create a new folder called `API`, and add `views.py` + `__init__.py` and update flask blueprint.
+
+## Quick start on local dev (front-end development)
+1. open terminal, run `./run.sh dev local-dev`
+3. visit `http://localhost:3000`
+
+## Quick start on local dev (build development, on top of securescaffold settings)
+1. open terminal, run `./run.sh dev static`
+3. visit `http://localhost:5000`
+
+P.S. this is useful to test the CSP rules, making sure style are applied correctly
+
+## Deployment
+1. open terminal, run `./run.sh deploy -m app -t (staging|production)`
