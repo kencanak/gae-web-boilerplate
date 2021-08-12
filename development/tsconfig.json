@@ -1,0 +1,20 @@
+{
+  "extends": "./node_modules/gts/tsconfig-google.json",
+  "compilerOptions": {
+    "target": "ESNext",
+    "module": "ESNext",
+    "allowJs": true,
+    "checkJs": false,
+    "removeComments": false,
+    "importsNotUsedAsValues": "preserve",
+    "lib": ["es2018", "dom", "DOM.Iterable", "ScriptHost"],
+    "declaration": false,
+    "forceConsistentCasingInFileNames": false,
+    "moduleResolution": "node",
+    "sourceMap": false,
+    "inlineSourceMap": false
+  },
+  "compileOnSave": false,
+  "include": [
+  ]
+}

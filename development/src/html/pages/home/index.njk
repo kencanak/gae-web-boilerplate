@@ -1,0 +1,28 @@
+{% extends "base.njk" %}
+{% from 'components/button/button.njk' import button %}
+
+{% block meta_tag %}
+
+{% endblock %}
+
+{% block page_styles %}
+  <link rel="stylesheet" href="/assets/css/home.css">
+{% endblock %}
+
+{% block content %}
+<div class="gwb-home">
+  {{ home.random }}
+  {{ button({
+    'label': 'I am a button',
+    'type': 'high-emphasis',
+    'icon': '#icon-arrow-right',
+    'href': 'https://google.com',
+    'blank': true
+  }) }}
+</div>
+{% endblock %}
+
+
+{% block page_script %}
+<script src="/assets/js/home.js"></script>
+{% endblock %}
