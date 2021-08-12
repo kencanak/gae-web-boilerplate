@@ -1,9 +1,21 @@
 const marked = require('marked');
+const fs = require('fs');
+const path = require('path');
 
 const ASSETS = 'assets';
 const DIST = 'dist';
 const SRC = 'src';
 const DATA = 'data';
+const PAGES_PATH = './src/html/pages';
+
+const jsSrc = [
+  'src/**/*.js',
+  '!src/static/**/*.js',
+];
+
+const tsSrc = [
+  'src/**/*.ts',
+];
 
 /**
  * Set options for marked package.
@@ -19,6 +31,55 @@ const nunjucksEnv = function (environment) {
   environment.addFilter('json', JSON.stringify);
   environment.addFilter('markdown', marked);
 };
+
+function getPageFiles(regex) {
+	// TODO: refactor the way we look for page's js files, as this will break
+	//			 if there is sub folder in each page folder
+
+	const files = [];
+	fs.readdirSync(PAGES_PATH)
+		.forEach((file) => {
+			// obtain page absolute path, this is with the assumption
+			// that the code structure will be pages > page_name > file
+			// check if it's a directory
+			const pagePath = path.join(PAGES_PATH, file);
+			const pageStat = fs.statSync(pagePath);
+
+			if (pageStat.isDirectory()) {
+				const pageFiles = fs.readdirSync(pagePath);
+
+				pageFiles.forEach((fileName) => {
+					if (fileName.match(regex)) {
+						const temp = `${PAGES_PATH}/${file}/${fileName}`;
+
+						files.push({
+							// file would be the page folder name
+							name: file,
+							entry: temp,
+						});
+					}
+				});
+			}
+		});
+
+	return files;
+}
+
+function getPageJSEntries() {
+	const pageJS = getPageFiles(/(.*?)\.(js|ts)$/);
+
+	return pageJS.map((item) => {
+		return {
+			// file would be the page folder name
+			name: item.name,
+			entry: item.entry.replace('.ts', ''),
+			dist: `./src/static/js/${item.name}.min.js`,
+      jsLintSrc: jsSrc,
+      tsLintSrc: tsSrc,
+      src: jsSrc.concat(tsSrc),
+		}
+  });
+}
 
 module.exports = {
   SRC: {
@@ -47,6 +108,17 @@ module.exports = {
     IMG: `${DIST}/${ASSETS}/images`,
     REV_MANIFEST: `${DIST}/${ASSETS}/rev-manifest.json`,
   },
+
+  JS_TS_SRC: [
+    {
+      entry:  './src/scripts/base',
+      dist:   './src/static/js/base.min.js',
+      jsLintSrc:    jsSrc,
+      tsLintSrc:    tsSrc,
+      src:    jsSrc.concat(tsSrc),
+    },
+    ...getPageJSEntries(),
+  ],
 
   HTMLMIN_OPTIONS: {
     removeComments: true,
