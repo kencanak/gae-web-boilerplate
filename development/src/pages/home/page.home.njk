@@ -1,0 +1,44 @@
+{% extends "base.njk" %}
+{% from 'components/button/button.njk' import button %}
+
+{% block page_styles %}
+  <link rel="stylesheet" href="css/home.css">
+{% endblock %}
+
+{% block main %}
+<div class="app-home app-inner">
+  <h1>Hello world</h1>
+  <ul>
+    <li>
+      <h2>test svg</h2>
+      <svg><use xlink:href="#icon-cancel"></use></svg>
+    </li>
+    <li>
+      <h2>test markdown</h2>
+      {{'# test' | markdown | safe}}
+    </li>
+    <li>
+      <h2>test nunjucks template data</h2>
+      {{home.random}}
+    </li>
+    <li>
+      <h2>test nunjucks component</h2>
+      {{ button({
+        'label': 'Hello button',
+        'type': 'high-emphasis',
+        'id': 'hello-btn',
+        'classes': 'app-home__button'
+      }) }}
+    </li>
+    <li>
+      <h2>image</h2>
+      <img src="images/apes.gif" />
+    </li>
+  </ul>
+</div>
+{% endblock %}
+
+
+{% block page_scripts %}
+<script src="js/home.js"></script>
+{% endblock %}

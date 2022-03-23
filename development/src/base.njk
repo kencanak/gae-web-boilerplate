@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta content="initial-scale=1, minimum-scale=1, width=device-width" name="viewport">
+    <title>{{content.title}}</title>
+    <meta name="referrer" content="no-referrer" />
+    {% block meta_tag %}
+
+    {% endblock meta_tag %}
+    <link rel="apple-touch-icon-precomposed" sizes="180x180" href="https://storage.googleapis.com/operating-anagram-8280/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://storage.googleapis.com/operating-anagram-8280/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://storage.googleapis.com/operating-anagram-8280/favicon-16x16.png">
+    <link rel="shortcut icon" href="https://storage.googleapis.com/operating-anagram-8280/favicon.ico">
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Google+Sans+Text:400,500,700,400i,500i,700i|Google+Sans:400,500|Product+Sans:400&amp;lang=en">
+    {% block third_party_styles %}{% endblock third_party_styles %}
+
+    {% block base_styles %}
+      <link href="{{"css/base.css"}}" rel="stylesheet">
+    {% endblock base_styles %}
+
+    {% block page_styles %}{% endblock page_styles %}
+  </head>
+
+  <body class="app-body">
+    {# Header #}
+    {% block header %}
+
+    {% endblock header %}
+
+    {# Main content #}
+    {% block main_wrapper %}
+    <main id="app-main" class="app-main">
+      {% block main %}
+      {% endblock main %}
+    </main>
+    {% endblock main_wrapper %}
+
+    {# Footer #}
+    {% block footer %}
+
+    {% endblock footer %}
+
+    {# additional component i.e snackbar + loader #}
+    {% block additional_components %}
+    {% endblock additional_components %}
+
+    {% block third_party_scripts %}{% endblock third_party_scripts %}
+    {% block base_script %}
+      <script defer src="{{"js/base.js"}}"></script>
+    {% endblock base_script %}
+    {% block page_scripts %}{% endblock page_scripts %}
+  </body>
+</html>
