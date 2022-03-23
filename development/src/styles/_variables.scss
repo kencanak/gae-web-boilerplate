@@ -1,0 +1,43 @@
+$base-unit: 8;
+$content-max-width: 1024;
+$default-icon-height: 24;
+$default-icon-width: 24;
+$default-locale: 'en';
+$gutter: 24;
+$header-bar-height: 64;
+$icon-category-width: 94;
+$icon-category-height: 85;
+
+$section-padding-top-bottom: 86;
+$section-padding-top-bottom-md: 100;
+
+// locales that the site supports.
+$locales: (
+  'zh',
+  'ja',
+  'ko'
+);
+
+$colours: (
+  'black'         : #000,
+  'cloud'         : #f7f7f7,
+  'coal'          : #282828,
+  'dove'          : #ddd,
+  'red'           : #ff0,
+  'light-red'     : #ff4e45,
+  'medium-red'    : #cc0,
+  'smoke'         : #979797,
+  'white'         : #fff,
+  'grey'          : #e0e0e0,
+  'green'         : #007a65,
+  'yellow'        : #ffff4a,
+  'purple'        : #6126bf,
+  'blue'          : #3b78e7,
+  'concrete'      : #f2f2f2,
+  'silver'        : #bfbfbf,
+  'silver-chalice': #adadad,
+  'smoking-gun'   : #727272,
+  'midnight'      : #1a73e8,
+  'eyebrow'       : #4A4A4A,
+  'footnote'      : #5F6368,
+);

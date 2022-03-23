@@ -1,0 +1,145 @@
+@use 'sass:math';
+
+@keyframes loaderAnimation{
+  0%{
+      background-position: -468px 0
+  }
+  100%{
+      background-position: 468px 0
+  }
+}
+
+@keyframes spin {
+  from {
+    transform: scale(-1, 1) rotate(0deg);
+  }
+  to {
+    transform: scale(-1, 1) rotate(-360deg);
+  }
+}
+
+@mixin reset-button {
+  -moz-osx-font-smoothing: inherit;
+  -webkit-appearance: none;
+  -webkit-font-smoothing: inherit;
+
+  &::-moz-focus-inner {
+    border: 0;
+    padding: 0;
+  }
+}
+
+@mixin visually-hidden {
+  border: 0;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+}
+
+@mixin remove-visually-hidden {
+  border: inherit;
+  clip: 0;
+  height: auto;
+  margin: inherit;
+  overflow: auto;
+  padding: inherit;
+  position: relative;
+  width: auto;
+}
+
+@mixin mq($bp, $type: min) {
+  @if map-has-key($breakpoints, $bp) {
+    $bp: map-get($breakpoints, $bp);
+
+    @if $type == max {
+      $bp: $bp - 1;
+    }
+
+    @media only screen and (#{$type}-width: rem($bp)) {
+      @content;
+    }
+  } @else {
+    @media only screen and (#{$type}-width: rem($bp)) {
+      @content;
+    }
+  }
+}
+
+@function strip-unit($number) {
+  @if type-of($number) == 'number' and not unitless($number) {
+    @return $number / ($number * 0 + 1);
+  }
+
+  @return $number;
+}
+
+@function color($name) {
+  @return map-get($colours, $name);
+}
+
+@function rem($size, $base: $font-size-base) {
+  @return math.div(strip-unit($size), $base) * 1rem;
+}
+
+@function em($size, $base: $font-size-base) {
+  @return math.div(strip-unit($size), $base) * 1em;
+}
+
+/**
+ * Gets font family of specified locale and type.
+ * The latter refers to whether it's body copy or header copy (Third Rail, fancy fonts).
+ *
+ * @param  {string} $locale | Defaults to 'en'.
+ * @param  {string} $type   | 'body' or 'header'.
+ *
+ * @return {string} Font family string, e.g. "Noto Sans", Arial, sans-serif.
+ */
+@function font-stack($locale: $default-locale, $type: body) {
+  @if map-has-key($fonts, $locale) {
+    @if map-has-key(map-get($fonts, $locale), $type) {
+      @return map-get(map-get($fonts, $locale), $type);
+    } @else {
+      @warn 'The locale "#{$locale}" has no "#{$type}" key; defaulting to "#{$default-locale}".';
+      @return map-get(map-get($fonts, $default-locale), $type);
+    }
+  } @else {
+    @warn 'The locale "#{$locale}" has no font stack defined; defaulting to "#{$default-locale}".';
+    @return map-get(map-get($fonts, $default-locale), $type);
+  }
+}
+
+@function font-weight($weight) {
+  @if map-has-key($font-weights, $weight) {
+    @return map-get($font-weights, $weight);
+  } @else {
+    @warn 'There is no font-weight named "#{$weight}"; choose one of: #{$font-weights}';
+  }
+}
+
+@function duration($name) {
+  @if map-has-key($duration, $name) {
+    @return map-get($duration, $name);
+  } @else {
+    @warn 'There is no duration named "#{$name}".';
+  }
+}
+
+@function ease($name) {
+  @if map-has-key($easing, $name) {
+    @return map-get($easing, $name);
+  } @else {
+    @warn 'There is no ease named "#{$name}".';
+  }
+}
+
+@function z-index($name) {
+  @if map-has-key($z-index, $name) {
+    @return map-get($z-index, $name);
+  } @else {
+    @warn 'There is no z-index named "#{$name}".';
+  }
+}

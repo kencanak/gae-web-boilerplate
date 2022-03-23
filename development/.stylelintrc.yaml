@@ -36,6 +36,7 @@ rules:
   # Need to check if units are required for some flex properties in some browsers.
   # length-zero-no-unit
   no-duplicate-at-import-rules: true
+  no-unknown-animations: true
   # Requires known-css-parser, not yet imported into third_party.
   # property-no-unknown: true
   rule-empty-line-before:

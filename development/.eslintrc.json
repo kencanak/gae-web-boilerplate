@@ -6,7 +6,7 @@
   },
   "overrides": [
     {
-      "files": ["**/*.ts"],
+      "files": ["src/**/*.ts"],
       "rules": {
         "node/no-unpublished-require": "off",
         "node/no-unpublished-import": "off",

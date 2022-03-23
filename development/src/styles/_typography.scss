@@ -1,0 +1,17 @@
+$fallback-fonts: Arial, Helvetica, sans-serif;
+
+$fonts: (
+  'en': (
+    'body'  : ('Google Sans', #{$fallback-fonts}),
+    'header': ('Google Sans', #{$fallback-fonts}),
+  ),
+);
+
+$font-size-base: 18;
+
+$font-weights: (
+  'light' : 300,
+  'normal': 400,
+  'medium': 500,
+  'bold'  : 700
+);
