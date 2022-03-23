@@ -16,7 +16,7 @@ A simple and boilerplate to build web application (vanilla + typescript) and dep
 1. Nunjucks
 2. Typescript
 3. SASS for CSS pre-processor
-4. Gulp
+4. Webpack 5
 5. BrowserSync
 
 ## Code structure

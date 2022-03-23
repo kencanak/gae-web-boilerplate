@@ -17,7 +17,7 @@ case "$1" in
         echo "running local dev server"
 
         cd development
-        nvm use 12.3.1
+        nvm use 14.19.0
 
         npm install
 
@@ -31,7 +31,7 @@ case "$1" in
         cd development
 
         # make sure all packages are installed
-        nvm use 12.3.1
+        nvm use 14.19.0
         npm install
 
         rm -rf dist
@@ -112,7 +112,7 @@ case "$1" in
         cd development
 
         # make sure all packages are installed
-        nvm use 12.3.1
+        nvm use 14.19.0
         npm install
 
         # remove build folder

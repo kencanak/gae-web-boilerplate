@@ -1,20 +1,28 @@
 {
   "extends": "./node_modules/gts/tsconfig-google.json",
   "compilerOptions": {
-    "target": "ESNext",
-    "module": "ESNext",
+    "target": "ES6",
     "allowJs": true,
     "checkJs": false,
-    "removeComments": false,
     "importsNotUsedAsValues": "preserve",
+    "downlevelIteration": true,
     "lib": ["es2018", "dom", "DOM.Iterable", "ScriptHost"],
     "declaration": false,
     "forceConsistentCasingInFileNames": false,
-    "moduleResolution": "node",
-    "sourceMap": false,
-    "inlineSourceMap": false
+    "moduleResolution": "node"
+  },
+  "linterOptions": {
+    "exclude": [
+      "node_modules/**/*.*",
+      "webpack.config.ts", "webpack.config.prod.ts"
+    ]
   },
   "compileOnSave": false,
   "include": [
+    "src/**/*.ts",
+  ],
+  "exclude": [
+    "node_modules/**/*.*",
+    "webpack.config.ts", "webpack.config.prod.ts"
   ]
 }

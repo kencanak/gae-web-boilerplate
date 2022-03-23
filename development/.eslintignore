@@ -1,3 +1,2 @@
-gulp/**
 node_modules/**
 **/*.min.js
