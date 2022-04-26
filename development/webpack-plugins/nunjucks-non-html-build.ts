@@ -18,15 +18,6 @@ marked.setOptions({
   breaks: true,
 });
 
-nunjucks.configure({
-  watch: false,
-  noCache: true,
-});
-
-const nunjucksEnv = new nunjucks.Environment(
-  new nunjucks.FileSystemLoader([`./src`, `./src/robots-sitemap`])
-);
-
 export default class NunjucksNonHTMLBuild {
   // Any options should be passed in the constructor of your plugin,
   // (this is a public API of your plugin).
@@ -73,6 +64,18 @@ export default class NunjucksNonHTMLBuild {
     compiler.hooks.emit.tapAsync(
       'NunjucksNonHTMLBuildWebpackPlugin',
       (compilation: any, callback: Function) => {
+        nunjucks.configure({
+          watch: false,
+          noCache: true,
+        });
+
+        // TODO: refactor this
+        // in order to make hot reload properly, i.e. should re-compile when component
+        // gets update, we need to use new nunjucks env
+        const nunjucksEnv = new nunjucks.Environment(
+          new nunjucks.FileSystemLoader([`./src`, `./src/robots-sitemap`])
+        );
+
         const filesToWatch = glob.sync(
           path.join(__dirname, '..', SRC_FOLDER, 'robots-sitemap', '**/*.njk'),
           {

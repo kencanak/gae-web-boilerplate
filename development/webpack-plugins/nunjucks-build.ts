@@ -18,16 +18,6 @@ marked.setOptions({
   breaks: true,
 });
 
-nunjucks.configure({
-  watch: false,
-  noCache: true,
-});
-
-const nunjucksEnv = new nunjucks.Environment(
-  new nunjucks.FileSystemLoader([`./src`, `./src/components`, `./src/pages`])
-);
-nunjucksEnv.addFilter('json', JSON.stringify);
-nunjucksEnv.addFilter('markdown', marked.parse);
 
 export default class NunjucksBuild {
   // Any options should be passed in the constructor of your plugin,
@@ -84,6 +74,20 @@ export default class NunjucksBuild {
     compiler.hooks.emit.tapAsync(
       'NunjucksBuildWebpackPlugin',
       (compilation: any, callback: Function) => {
+        // TODO: refactor this
+        // in order to make hot reload properly, i.e. should re-compile when component
+        // gets update, we need to use new nunjucks env
+        nunjucks.configure({
+          watch: false,
+          noCache: true,
+        });
+
+        const nunjucksEnv = new nunjucks.Environment(
+          new nunjucks.FileSystemLoader([`./src`, `./src/components`, `./src/pages`])
+        );
+        nunjucksEnv.addFilter('json', JSON.stringify);
+        nunjucksEnv.addFilter('markdown', marked.parse);
+
         const pageHTML: Array<any> = getPageFiles(/.*\.njk$/);
 
         pageHTML.forEach(async (page) => {
