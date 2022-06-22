@@ -55,6 +55,20 @@ module.exports = (env: any, argv: any) => {
             },
             'svgo-loader',
           ]
+        },
+        {
+          test: /\.(png|jpg|jpeg|gif)$/,
+          use: [
+            {
+              loader: 'file-loader',
+              options: {
+                name: '[name].[ext]',
+                outputPath: 'images',
+                publicPath: '../images/',
+                useRelativePaths: true
+              }
+            }
+          ]
         }
       ]
     },
@@ -76,7 +90,7 @@ module.exports = (env: any, argv: any) => {
       }),
       new NunjucksBuild(),
       new StylelintWebpackPlugin({
-        files: '**/*.scss',
+        files: '**/*.s?css',
       }),
       new MiniCssExtractPlugin({
         filename: `css/[name]${isProd ? '.[contenthash:5].min' : ''}.css`,

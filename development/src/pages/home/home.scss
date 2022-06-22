@@ -1,0 +1,11 @@
+@import '../../styles/common';
+
+.app-home {
+  &__test {
+    display: block;
+    width: rem(200);
+    height: rem(200);
+    border: thin solid red;
+    background-image: url(../../images/apes.gif);
+  }
+}

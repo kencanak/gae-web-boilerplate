@@ -93,6 +93,20 @@ module.exports = (env: any, argv: any) => {
           },
           'svgo-loader',
         ]
+      },
+      {
+        test: /\.(png|jpg|jpeg|gif)$/,
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              name: '[name].[ext]',
+              outputPath: 'images',
+              publicPath: '../images/',
+              useRelativePaths: true
+            }
+          }
+        ]
       }
     ],
   };
