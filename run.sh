@@ -13,8 +13,6 @@ if [ -f ./build/.env ]; then
   export $(echo $(cat ./build/.env | sed 's/#.*//g'| xargs) | envsubst)
 fi
 
-echo $STAGING_APP_ID
-
 
 case "$1" in
   dev)
@@ -46,6 +44,8 @@ case "$1" in
         cp -R -f development/dist build/
 
         cd build
+
+        pip install virtualenv
         # prep api dev env
         virtualenv env -p python3 && source env/bin/activate && pip install -r requirements.txt
 
@@ -133,6 +133,7 @@ case "$1" in
 
         cd build
 
+        pip install virtualenv
         # prep build dev env
         virtualenv env -p python3 && source env/bin/activate && pip install -r requirements.txt
 
