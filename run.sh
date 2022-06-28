@@ -9,6 +9,12 @@ PRODUCTION_APP_ID="[GCLOUD PRODUCTION PROJECT ID]"
 # sourcing nvm
 . "$NVM_DIR/nvm.sh"
 
+if [ -f ./build/.env ]; then
+  export $(echo $(cat ./build/.env | sed 's/#.*//g'| xargs) | envsubst)
+fi
+
+echo $STAGING_APP_ID
+
 
 case "$1" in
   dev)

@@ -20,7 +20,11 @@ set -o errexit -o nounset
 FLASK_ENV="development"
 FLASK_APP="main:app"
 
+if [ -f ./.env ]; then
+  export $(echo $(cat ./.env | sed 's/#.*//g'| xargs) | envsubst)
+fi
+
 # Start your local development server.
-export GOOGLE_CLOUD_PROJECT=[Staging/Development GCP ID]
+export GOOGLE_CLOUD_PROJECT=$STAGING_APP_ID
 export FLASK_SETTINGS_FILENAME="settings.py"
 FLASK_ENV="$FLASK_ENV" FLASK_APP="$FLASK_APP" flask run

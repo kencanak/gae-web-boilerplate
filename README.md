@@ -28,6 +28,29 @@ this is a typical vanilla web scafolding, any UI development should be done in t
 ### back-end
 Typical Flask app code structure. This can be expanded, should you need to add API end points, you could simply create a new folder called `API`, and add `views.py` + `__init__.py` and update flask blueprint.
 
+## Quick start on setting env variables
+to set gcloud project id, you can either:
+1. go to `build`
+2. create `.env` file
+3. set both staging and production gcloud app id
+```
+STAGING_APP_ID="[GCLOUD STAGING PROJECT ID]"
+PRODUCTION_APP_ID="[GCLOUD PRODUCTION PROJECT ID]"
+```
+
+NOTE: by default, `.env` file will be ignored
+
+OR
+1. open `./run.sh`
+2. update the variable value of
+```
+STAGING_APP_ID="[GCLOUD STAGING PROJECT ID]"
+PRODUCTION_APP_ID="[GCLOUD PRODUCTION PROJECT ID]"
+```
+3. go to `./build/run.sh`, update GCLOUD_PROJECT_ID to your staging gcloud app ID
+
+NOTE: it's recommended to go by the first approach
+
 ## Quick start on local dev (front-end development)
 1. open terminal, run `./run.sh dev local-dev`
 3. visit `http://localhost:3000`
