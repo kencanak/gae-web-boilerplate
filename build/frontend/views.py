@@ -10,6 +10,7 @@ IGNORED_PATHS = (
 
 
 IGNORED_FILE_EXT = (
+    '.webp',
     '.css',
     '.js',
     '.png',

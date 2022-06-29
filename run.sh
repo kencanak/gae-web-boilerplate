@@ -39,6 +39,7 @@ case "$1" in
         npm install
 
         rm -rf dist
+        rm -rf build/dist
         npm run build
         cd ..
         cp -R -f development/dist build/
@@ -123,6 +124,7 @@ case "$1" in
 
         # remove build folder
         rm -rf dist
+        rm -rf build/dist
 
         npm run build
 
