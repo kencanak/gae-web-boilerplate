@@ -63,3 +63,12 @@ P.S. this is useful to test the CSP rules, making sure style are applied correct
 
 ## Deployment
 1. open terminal, run `./run.sh deploy -m app -t (staging|production)`
+
+NOTE:
+make sure your user account has the following access role:
+- App Engine Deployer
+- Cloud Build Editor
+- Service Account User
+- Storage Object Admin
+
+you can go to [GCloud console](https://console.cloud.google.com/iam-admin/iam?serviceId=default&project=[PROJECT_ID]), to assign the roles
