@@ -1,4 +1,5 @@
 @import './variables';
+@import './utils';
 
 html {
   &[lang="ko"] {
@@ -104,4 +105,8 @@ noscript {
 
 .app-main {
   font-family: font-stack('en', 'body');
+}
+
+.svg-sprite {
+  @include visually-hidden;
 }

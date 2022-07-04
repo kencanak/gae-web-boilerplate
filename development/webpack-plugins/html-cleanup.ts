@@ -88,12 +88,33 @@ export default class HTMLCleanUp {
         if (!this.manifest) {
           this.manifest = require(MANIFEST_PATH);
         }
+
         const filesToWatch = glob.sync(path.join(__dirname, '..', DIST_FOLDER, '**/*.html'), {
           absolute: true,
         });
 
+        const svgSpriteFiles = glob.sync(path.join(__dirname, '..', DIST_FOLDER, 'svg/*.svg'), {
+          absolute: true,
+        });
+
+        const svgContent: Array<string> = [];
+
+        if (svgSpriteFiles.length) {
+          svgSpriteFiles.forEach((svgFile: string) => {
+            const temp = fs.readFileSync(svgFile, 'utf8');
+            svgContent.push(temp);
+          });
+        }
+
         filesToWatch.forEach(async (f: string) => {
           let templateContent = fs.readFileSync(f, 'utf8');
+
+          // TODO: find better approach
+          if (svgContent.length) {
+            const re = new RegExp(`svg\/sprite.svg`);
+
+            templateContent = templateContent.replace(re, '');
+          }
 
           // update hash name on css/js
           Object.keys(this.manifest).forEach((item) => {
@@ -107,10 +128,17 @@ export default class HTMLCleanUp {
             templateContent = await this.critters.process(templateContent);
           }
 
+          const $ = cheerio.load(templateContent);
+
+          // inject svg sprites to page
+          $('body').prepend(`
+            <div aria-hidden="true" class="svg-sprite">
+              ${svgContent.join('')}
+            </div>
+          `);
+
           // begin csp compliance
           if (this.options.cspCompliance) {
-            const $ = cheerio.load(templateContent);
-
             // search for style tag, inject nonce
             $('style').attr('nonce', '{{csp_nonce()}}');
 
