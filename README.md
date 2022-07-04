@@ -56,7 +56,7 @@ NOTE: it's recommended to go by the first approach
 3. visit `http://localhost:3000`
 
 ## Quick start on local dev (build development, on top of securescaffold settings)
-1. open terminal, run `./run.sh dev static`
+1. open terminal, run `./run.sh dev static-build`
 3. visit `http://localhost:5000`
 
 P.S. this is useful to test the CSP rules, making sure style are applied correctly
