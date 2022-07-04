@@ -1,8 +1,9 @@
+import * as path from 'path';
 import * as MiniCssExtractPlugin from 'mini-css-extract-plugin';
-import HTMLCleanUp from './webpack-plugins/html-cleanup';
 const { WebpackManifestPlugin } = require('webpack-manifest-plugin');
 const { merge } = require('webpack-merge');
 
+import HTMLCleanUp from './webpack-plugins/html-cleanup';
 const TerserPlugin = require('terser-webpack-plugin');
 
 const baseConfig = require('./webpack.config');
@@ -88,7 +89,10 @@ module.exports = (env: any, argv: any) => {
           {
             loader: 'svg-sprite-loader',
             options: {
-              extract: false,
+              extract: true,
+              spriteFilename: 'sprite.svg',
+              outputPath: 'svg/',
+              publicPath: '../svg/'
             }
           },
           'svgo-loader',

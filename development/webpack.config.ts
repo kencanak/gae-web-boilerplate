@@ -8,6 +8,7 @@ const ESLintPlugin = require('eslint-webpack-plugin');
 const CopyPlugin = require("copy-webpack-plugin");
 const compress = require('compression');
 const StylelintWebpackPlugin = require('stylelint-webpack-plugin');
+const SpriteLoaderPlugin = require('svg-sprite-loader/plugin');
 
 module.exports = (env: any, argv: any) => {
   const isProd = argv.mode === 'production';
@@ -50,7 +51,10 @@ module.exports = (env: any, argv: any) => {
             {
               loader: 'svg-sprite-loader',
               options: {
-                extract: false,
+                extract: true,
+                spriteFilename: 'sprite.svg',
+                outputPath: 'svg/',
+                publicPath: '../svg/'
               }
             },
             'svgo-loader',
@@ -95,6 +99,7 @@ module.exports = (env: any, argv: any) => {
       new MiniCssExtractPlugin({
         filename: `css/[name]${isProd ? '.[contenthash:5].min' : ''}.css`,
       }),
+      new SpriteLoaderPlugin(),
       new CopyPlugin({
         patterns: ASSETS.map((asset) => {
           return {
