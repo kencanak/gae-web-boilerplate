@@ -21,7 +21,8 @@ IGNORED_FILE_EXT = (
     '.map',
     '.json',
     '.txt',
-    '.xml'
+    '.xml',
+    '.svg'
 )
 
 NO_CACHE_FILES = (
