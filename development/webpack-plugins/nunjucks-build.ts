@@ -1,7 +1,6 @@
 import * as fs from 'fs';
 import * as path from 'path';
 
-const Critters = require('critters');
 const glob = require('glob');
 const marked = require('marked');
 const nunjucks = require('nunjucks');
