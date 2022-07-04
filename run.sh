@@ -31,6 +31,8 @@ case "$1" in
       static-build)
         echo "running static"
 
+        rm -rf build/dist
+
         # Build the static site
         cd development
 
@@ -39,7 +41,6 @@ case "$1" in
         npm install
 
         rm -rf dist
-        rm -rf build/dist
         npm run build
         cd ..
         cp -R -f development/dist build/
@@ -115,6 +116,8 @@ case "$1" in
 
     case "$module" in
       app)
+        rm -rf build/dist
+
         # Build the static site
         cd development
 
@@ -124,7 +127,6 @@ case "$1" in
 
         # remove build folder
         rm -rf dist
-        rm -rf build/dist
 
         npm run build
 
