@@ -17,6 +17,7 @@
 {% block main %}
 <div class="app-404">
   <h1>Page not found</h1>
+  <svg><use xlink:href="svg/sprite.svg#icon-checked"></use></svg>
 </div>
 {% endblock %}
 
@@ -31,5 +32,5 @@
 {% endblock third_party_scripts %}
 
 {% block page_scripts %}
-{# <script src="js/404.js"></script> #}
+<script src="js/404.js"></script>
 {% endblock %}
