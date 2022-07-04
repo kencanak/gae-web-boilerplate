@@ -74,6 +74,15 @@ A simple and boilerplate to build web application (vanilla + typescript) and dep
       2. in `src/components/header` folder, create new nunjucks template file called `header.njk` + `header.scss` (OPTIONAL)
       3. if there is component style, you might want to import it in `src/styles/index.scss`. otherwise, you can also import it in the respective page style file
 
+  - **Loading SVG:**
+      1. go to `src/svgs`, add svg file
+      2. in page/base typescript file, import the respective svg. e.g. `import '../../svgs/icon-cancel.svg';`
+      3. in markup, load the svg, note on the file path `svg/sprite.svg`
+      ```
+      <svg>
+        <use xlink:href="svg/sprite.svg#icon-cancel"></use>
+      </svg>
+      ```
 
 ```
 .
