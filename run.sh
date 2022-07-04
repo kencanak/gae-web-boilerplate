@@ -56,7 +56,7 @@ case "$1" in
       ;;
 
       *)
-        echo 'invalid dev environment (static-build)'
+        echo 'invalid dev environment (local-dev|static-build)'
         exit 1
       ;;
 
