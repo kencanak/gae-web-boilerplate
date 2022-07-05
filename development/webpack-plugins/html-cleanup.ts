@@ -58,7 +58,10 @@ export default class HTMLCleanUp {
     };
 
     if (options.criticalCSS && typeof options.criticalCSS === 'object') {
-      this.options.criticalCSS = { ...HTMLCleanUp.defaultOptions.criticalCSS, ...options.criticalCSS };
+      this.options.criticalCSS = {
+        ...HTMLCleanUp.defaultOptions.criticalCSS,
+        ...options.criticalCSS,
+      };
       this.critters = new Critters(this.options.criticalCSS);
     }
 
@@ -123,12 +126,7 @@ export default class HTMLCleanUp {
             templateContent = templateContent.replace(re, this.manifest[item]);
           });
 
-          // begin critical css
-          if (this.critters) {
-            templateContent = await this.critters.process(templateContent);
-          }
-
-          const $ = cheerio.load(templateContent);
+          let $ = cheerio.load(templateContent);
 
           // inject svg sprites to page
           $('body').prepend(`
@@ -137,8 +135,18 @@ export default class HTMLCleanUp {
             </div>
           `);
 
+          templateContent = $.html();
+
+          // begin critical css
+          if (this.critters) {
+            templateContent = await this.critters.process(templateContent);
+          }
+
           // begin csp compliance
           if (this.options.cspCompliance) {
+            // reload the latest template content
+            $ = cheerio.load(templateContent);
+
             // search for style tag, inject nonce
             $('style').attr('nonce', '{{csp_nonce()}}');
 
