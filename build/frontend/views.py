@@ -22,7 +22,8 @@ IGNORED_FILE_EXT = (
     '.json',
     '.txt',
     '.xml',
-    '.svg'
+    '.svg',
+    '.pdf'
 )
 
 NO_CACHE_FILES = (
