@@ -156,52 +156,80 @@ A simple and boilerplate to build web application (vanilla + typescript) and dep
 
 ```
 .
-+-- webpack-plugins
-|   +-- html-cleanup.ts
-|   +-- nunjucks-build.ts
-|   +-- nunjucks-non-html-build.ts
-|   +-- utils.ts
-+-- src
-|   +-- data
-|       +-- global.json
-|       +-- home.json
-|       +-- robots.json
-|       +-- sitemap.json
-|   +-- components
-|       +-- button
-|           +-- button.njk
-|           +-- button.scss
-|       +-- any other components
-|   +-- pages
-|       +-- home
-|           +-- index.njk
-|           +-- home.scss
-|           +-- home.ts
-|       +-- 404
-|           +-- index.njk
-|           +-- 404.scss
-|           +-- 404.ts (if needed)
-|       +-- any other pages
-|   +-- images
-|       +-- any image assets
-|   +-- svgs
-|       +-- any svg assets
-|   +-- robots-sitemap
-|       +-- robots.txt.njk
-|       +-- sitemap.xml.njk
-|   +-- styles
-|       +-- _layout.scss
-|       +-- _utils.scss
-|       +-- _typography.scss
-|       +-- _common.scss
-|       +-- _variables.scss
-|   +-- base.njk
-|   +-- base.ts
-|   +-- base.scss
-+-- tsconfig.json
-+-- .eslintrc.json
-+-- webpack.config.prod.ts
-+-- webpack.config.ts
+├── .eslintignore
+├── .eslintrc.json
+├── .gitignore
+├── .prettierrc.js
+├── .stylelintrc.yaml
+├── README.md
+├── package-lock.json
+├── package.json
+├── src
+│   ├── base.njk
+│   ├── base.scss
+│   ├── base.ts
+│   ├── components
+│   │   ├── .DS_Store
+│   │   └── button
+│   │       ├── button.njk
+│   │       └── button.scss
+│   ├── data
+│   │   ├── global.json
+│   │   ├── home.json
+│   │   ├── robots.json
+│   │   ├── sitemap.json
+│   │   └── sub-page-child.json
+│   ├── images
+│   │   └── apes.gif
+│   ├── pages
+│   │   ├── 404
+│   │   │   ├── 404.scss
+│   │   │   ├── 404.ts
+│   │   │   └── page.404.njk
+│   │   ├── home
+│   │   │   ├── home.scss
+│   │   │   ├── home.ts
+│   │   │   └── page.home.njk
+│   │   └── sub-page
+│   │       ├── page.sub-page.njk
+│   │       └── sub-page-child
+│   │           ├── page.sub-page-child.njk
+│   │           ├── sub-page-child.scss
+│   │           └── sub-page-child.ts
+│   ├── robots-sitemap
+│   │   ├── robots.txt.njk
+│   │   └── sitemap.xml.njk
+│   ├── styles
+│   │   ├── _common.scss
+│   │   ├── _layout.scss
+│   │   ├── _typography.scss
+│   │   ├── _utils.scss
+│   │   └── _variables.scss
+│   ├── svgs
+│   │   ├── icon-cancel.svg
+│   │   ├── icon-checked.svg
+│   │   ├── icon-close.svg
+│   │   └── icon-help.svg
+│   ├── templates
+│   │   ├── test-template
+│   │   │   ├── template.test-template.njk
+│   │   │   └── test-template.ts
+│   │   └── test-template-sub
+│   │       ├── template.test-template-sub.njk
+│   │       └── test-template-sub.ts
+│   ├── templates-data
+│   │   ├── test-template-sub.json
+│   │   └── test-template.json
+│   └── utils
+│       └── api.ts
+├── tsconfig.json
+├── webpack-plugins
+│   ├── html-cleanup.ts
+│   ├── nunjucks-build.ts
+│   ├── nunjucks-non-html-build.ts
+│   └── utils.ts
+├── webpack.config.prod.ts
+└── webpack.config.ts
 
 ```
 
