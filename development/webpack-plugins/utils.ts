@@ -7,6 +7,7 @@ export const SRC_FOLDER = './src';
 export const MANIFEST_PATH = path.join(__dirname, '..', DIST_FOLDER, 'manifest.json');
 
 const pagesPath = path.join('.', SRC_FOLDER, 'pages');
+const templatesPath = path.join('.', SRC_FOLDER, 'templates');
 
 export const ASSETS = [
   'images',
@@ -54,12 +55,46 @@ export const getPageFiles = (regex: any) => {
 		});
 
 	return files;
-}
+};
+
+export const getTemplateFiles = (regex: any) => {
+	const files: any = [];
+	fs.readdirSync(templatesPath)
+		.forEach((file) => {
+			// obtain page absolute path, this is with the assumption
+			// that the code structure will be pages > page_name > file
+			// check if it's a directory
+			const templatePath = path.join(templatesPath, file);
+			const templateStat = fs.statSync(templatePath);
+
+			if (templateStat.isDirectory()) {
+				const templateFiles = fs.readdirSync(templatePath);
+
+				templateFiles.forEach((fileName) => {
+					if (fileName.match(regex)) {
+						const temp = `./${templatePath}/${fileName}`;
+						const extension = path.extname(temp);
+						const actualFileName = path.basename(temp, extension);
+
+						files.push({
+							// file would be the page folder name
+							name: actualFileName,
+							entry: temp,
+							path: file,
+						});
+					}
+				});
+			}
+		});
+
+	return files;
+};
 
 export const getPageJSEntries = () => {
 	const pageJS: Array<any> = getPageFiles(/(.*?)\.(js|ts)$/);
+	const templateJS: Array<any> = getTemplateFiles(/(.*?)\.(js|ts)$/);
 
-	return pageJS.map((item) => {
+	return [...pageJS, ...templateJS].map((item) => {
 		return {
 			// file would be the page folder name
 			name: item.name,
@@ -71,8 +106,9 @@ export const getPageJSEntries = () => {
 
 export const getPageCSSEntries = () => {
 	const pageCSS: Array<any> = getPageFiles(/.*\.scss$/);
+	const templateCSS: Array<any> = getTemplateFiles(/.*\.scss$/);
 
-	return pageCSS.map((item) => {
+	return [...pageCSS, ...templateCSS].map((item) => {
 		return {
       name: item.name,
 			entry: item.entry,
@@ -110,3 +146,4 @@ export const ENTRIES = {
   ],
   ...getEntries(),
 };
+

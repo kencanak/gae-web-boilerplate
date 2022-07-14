@@ -1,0 +1,35 @@
+{% extends "base.njk" %}
+
+{% block meta_tag %}
+
+{% endblock %}
+
+{% block third_party_styles %}
+{% endblock %}
+
+{% block page_styles %}
+{% endblock %}
+
+{% block header %}
+{% endblock %}
+
+{% block main %}
+<div class="app-sub-page-child">
+  this is a test template<br/>
+  {{context.random}}
+</div>
+{% endblock %}
+
+{% block footer %}
+{% endblock %}
+
+{# additional component i.e snackbar + loader #}
+{% block additional_components %}
+{% endblock %}
+
+{% block third_party_scripts %}
+{% endblock third_party_scripts %}
+
+{% block page_scripts %}
+<script src="/js/test-template.js"></script>
+{% endblock %}

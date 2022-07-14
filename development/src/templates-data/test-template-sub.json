@@ -1,0 +1,13 @@
+{
+  "parentSlug": "sub-page/",
+  "data": [
+    {
+      "slug": "test-sub-template-1",
+      "random": "hello from test sub template 1"
+    },
+    {
+      "slug": "test-sub-template-2",
+      "random": "hello from test sub template 2"
+    }
+  ]
+}

@@ -19,7 +19,28 @@ A simple and boilerplate to build web application (vanilla + typescript) and dep
     **To add new data for a new page:**
     1. you can simply create a new JSON file with the page name i.e. `about.json`.
     2. you should be able to access the page data from `context` object.
+* `templates-data` folder
+    this folder contains nunjuck page templates data.
+    **To add new data for a new template:**
+    1. you can simply create a new JSON file with the template name
+    2. it's imperative to follow the following structure
     ```
+    {
+      "parentSlug": "[the parent of the page template, if any, otherwise leave it blank]",
+      "data": [
+        {
+          "slug": [page slug],
+          ... the rest of template context data
+        },
+        {
+          "slug": [page slug],
+          ... the rest of template context data
+        }
+      ]
+    }
+    ```
+    2. you should be able to access the page data from `context` object.
+
 * `src` folder
     - **to create new page:**
       1. go to `src/pages`, create new page folder. i.e. `about`
@@ -65,6 +86,54 @@ A simple and boilerplate to build web application (vanilla + typescript) and dep
       ```
 
       3. (OPTIONAL), create page's style + script in the same folder. i.e. `about.scss` and `about.ts`
+
+
+      P.S: if there is no custom style/script needed, you can remove the page_styles + page_scripts block.
+
+  - **to create new template:**
+      1. go to `src/tempates`, create new page folder. i.e. `random-template`
+      2. in `src/tempates/random-template` folder, create new `template.random-template.njk`. with the following content:
+      ```
+      {% extends "base.njk" %}
+
+      {% block meta_tag %}
+
+      {% endblock %}
+
+      {% block third_party_styles %}
+      {% endblock %}
+
+      {% block page_styles %}
+        <link rel="stylesheet" href="css/404.css">
+      {% endblock %}
+
+      {% block header %}
+      {% endblock %}
+
+      {% block main %}
+      <div class="app-about">
+        [content]
+      </div>
+      {% endblock %}
+
+      {% block footer %}
+      {% endblock %}
+
+      {# additional component i.e snackbar + loader #}
+      {% block additional_components %}
+      {% endblock %}
+
+      {% block third_party_scripts %}
+      {% endblock third_party_scripts %}
+
+      {% block page_scripts %}
+      {# <script src="js/404.js"></script> #}
+      {% endblock %}
+
+
+      ```
+
+      3. (OPTIONAL), create page's style + script in the same folder. i.e. `random-template.scss` and `random-template.ts`
 
 
       P.S: if there is no custom style/script needed, you can remove the page_styles + page_scripts block.

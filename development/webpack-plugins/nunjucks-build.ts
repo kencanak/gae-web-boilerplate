@@ -5,7 +5,7 @@ const glob = require('glob');
 const marked = require('marked');
 const nunjucks = require('nunjucks');
 
-import { getPageFiles, SRC_FOLDER } from './utils';
+import { getPageFiles, getTemplateFiles, SRC_FOLDER } from './utils';
 
 /**
  * Set options for marked package.
@@ -39,7 +39,7 @@ export default class NunjucksBuild {
     });
 
     const nunjucksEnv = new nunjucks.Environment(
-      new nunjucks.FileSystemLoader([`./src`, `./src/components`, `./src/pages`])
+      new nunjucks.FileSystemLoader([`./src`, `./src/components`, `./src/pages`, `./src/templates`])
     );
     nunjucksEnv.addFilter('json', JSON.stringify);
     nunjucksEnv.addFilter('markdown', marked.parse);
@@ -70,6 +70,37 @@ export default class NunjucksBuild {
         templateContent,
       );
     });
+
+    const templatesHTML: Array<any> = getTemplateFiles(/.*\.njk$/);
+
+    templatesHTML.forEach(async (page) => {
+      const templateDataPath = path.join(__dirname, '..', SRC_FOLDER, 'templates-data', `${page.path}.json`);
+      let templateData: any = {};
+
+      if (fs.existsSync(templateDataPath)) {
+        templateData = JSON.parse(fs.readFileSync(templateDataPath, 'utf-8'));
+
+        const parentSlug = templateData.parentSlug || '/';
+
+        const template = fs.readFileSync(page.entry, 'utf8');
+        const globalDataPath = path.join(__dirname, '..', SRC_FOLDER, 'data', `global.json`);
+
+        // begin generating each page
+        templateData.data.forEach(async (item: any) => {
+          const out = path.join(parentSlug, item.slug, 'index.html');
+
+          let templateContent = nunjucksEnv.renderString(template, {
+            global: JSON.parse(fs.readFileSync(globalDataPath, 'utf-8')),
+            context: item,
+          });
+
+          compiler(
+            out,
+            templateContent,
+          );
+        });
+      }
+    });
   }
 
   // Define `apply` as its prototype method which is supplied with compiler as its argument
@@ -92,6 +123,8 @@ export default class NunjucksBuild {
         compilation.contextDependencies.add(path.resolve(__dirname, '..', SRC_FOLDER, 'components'));
         compilation.contextDependencies.add(path.resolve(__dirname, '..', SRC_FOLDER, 'pages'));
         compilation.contextDependencies.add(path.resolve(__dirname, '..', SRC_FOLDER, 'data'));
+        compilation.contextDependencies.add(path.resolve(__dirname, '..', SRC_FOLDER, 'templates'));
+        compilation.contextDependencies.add(path.resolve(__dirname, '..', SRC_FOLDER, 'templates-data'));
 
         callback();
       }
@@ -103,6 +136,13 @@ export default class NunjucksBuild {
       (compilation: any, callback: Function) => {
         const pagesToWatch = glob.sync(
           path.join(__dirname, '..', SRC_FOLDER, 'pages', '**/*.njk'),
+          {
+            absolute: true,
+          }
+        );
+
+        const templatesToWatch = glob.sync(
+          path.join(__dirname, '..', SRC_FOLDER, 'templates', '**/*.njk'),
           {
             absolute: true,
           }
@@ -122,7 +162,20 @@ export default class NunjucksBuild {
           }
         );
 
-        const filesToWatch = [...pagesToWatch, ...componentToWatch, ...dataToWatch];
+        const templateDataToWatch = glob.sync(
+          path.join(__dirname, '..', SRC_FOLDER, 'templates-data', '**/*.json'),
+          {
+            absolute: true,
+          }
+        );
+
+        const filesToWatch = [
+          ...pagesToWatch,
+          ...componentToWatch,
+          ...dataToWatch,
+          ...templatesToWatch,
+          ...templateDataToWatch,
+        ];
 
         filesToWatch.filter((f: string) => !this.files.includes(f)).forEach((f: string) => {
           if (Array.isArray(compilation.fileDependencies)) {

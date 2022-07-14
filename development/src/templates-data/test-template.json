@@ -1,0 +1,9 @@
+{
+  "parentSlug": "",
+  "data": [
+    {
+      "slug": "test-template-1",
+      "random": "hello from test template 1"
+    }
+  ]
+}
