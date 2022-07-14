@@ -5,7 +5,7 @@ const glob = require('glob');
 const marked = require('marked');
 const nunjucks = require('nunjucks');
 
-import { getPageFiles, SRC_FOLDER } from './utils';
+import { getPageFiles, SRC_FOLDER, camelCase } from './utils';
 
 /**
  * Set options for marked package.
@@ -52,7 +52,8 @@ export default class NunjucksBuild {
       const templateData = fs.readFileSync(page.entry, 'utf8');
 
       let pageData = {};
-      const pageDataPath = path.join(__dirname, '..', SRC_FOLDER, 'data', `${page.name}.json`);
+      const dataName = page.name.replace('page.', '');
+      const pageDataPath = path.join(__dirname, '..', SRC_FOLDER, 'data', `${dataName}.json`);
       const globalDataPath = path.join(__dirname, '..', SRC_FOLDER, 'data', `global.json`);
 
       if (fs.existsSync(pageDataPath)) {
@@ -61,7 +62,7 @@ export default class NunjucksBuild {
 
       let templateContent = nunjucksEnv.renderString(templateData, {
         global: JSON.parse(fs.readFileSync(globalDataPath, 'utf-8')),
-        [page.name]: pageData,
+        [camelCase(dataName)]: pageData,
       });
 
       compiler(
@@ -90,6 +91,7 @@ export default class NunjucksBuild {
       (compilation: any, callback: Function) => {
         compilation.contextDependencies.add(path.resolve(__dirname, '..', SRC_FOLDER, 'components'));
         compilation.contextDependencies.add(path.resolve(__dirname, '..', SRC_FOLDER, 'pages'));
+        compilation.contextDependencies.add(path.resolve(__dirname, '..', SRC_FOLDER, 'data'));
 
         callback();
       }
@@ -113,7 +115,14 @@ export default class NunjucksBuild {
           }
         );
 
-        const filesToWatch = [...pagesToWatch, ...componentToWatch];
+        const dataToWatch = glob.sync(
+          path.join(__dirname, '..', SRC_FOLDER, 'data', '**/*.json'),
+          {
+            absolute: true,
+          }
+        );
+
+        const filesToWatch = [...pagesToWatch, ...componentToWatch, ...dataToWatch];
 
         filesToWatch.filter((f: string) => !this.files.includes(f)).forEach((f: string) => {
           if (Array.isArray(compilation.fileDependencies)) {

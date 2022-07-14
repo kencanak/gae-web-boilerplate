@@ -98,6 +98,10 @@ export const getEntries = () => {
   }, {});
 }
 
+export const camelCase = (s: string) => {
+	return s.replace(/-./g, (x: string) => x[1].toUpperCase());
+};
+
 // we should compile base and detect component by default
 export const ENTRIES = {
   'base': [
