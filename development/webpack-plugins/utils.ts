@@ -12,34 +12,42 @@ export const ASSETS = [
   'images',
 ];
 
-export const getPageFiles = (regex: any) => {
-	// TODO: refactor the way we look for page's js files, as this will break
-	//			 if there is sub folder in each page folder
+const processPages = (file: any, regex: any) => {
+	// obtain page absolute path, this is with the assumption
+	// that the code structure will be pages > page_name > file
+	// check if it's a directory
+	const pagePath = path.join(pagesPath, file);
+	const pageStat = fs.statSync(pagePath);
+	let files: any = [];
+	if (pageStat.isDirectory()) {
+		const pageFiles = fs.readdirSync(pagePath);
 
-	const files: any = [];
-	fs.readdirSync(pagesPath)
-		.forEach((file) => {
-			// obtain page absolute path, this is with the assumption
-			// that the code structure will be pages > page_name > file
-			// check if it's a directory
-			const pagePath = path.join(pagesPath, file);
-			const pageStat = fs.statSync(pagePath);
+		pageFiles.forEach((fileName) => {
+			const subPageStat= fs.statSync(path.join(pagePath, fileName));
 
-			if (pageStat.isDirectory()) {
-				const pageFiles = fs.readdirSync(pagePath);
+			if (subPageStat.isDirectory()) {
+				const getSubPages = processPages(path.join(file, fileName), regex);
+				files = [...files, ...getSubPages.map((item: any) => item)];
+			} else if (fileName.match(regex)) {
+				const temp = `./${pagesPath}/${file}/${fileName}`;
 
-				pageFiles.forEach((fileName) => {
-					if (fileName.match(regex)) {
-						const temp = `./${pagesPath}/${file}/${fileName}`;
-
-						files.push({
-							// file would be the page folder name
-							name: file,
-							entry: temp,
-						});
-					}
+				files.push({
+					// file would be the page folder name
+					name: file,
+					entry: temp,
 				});
 			}
+		});
+	}
+
+	return files;
+};
+
+export const getPageFiles = (regex: any) => {
+	let files: any = [];
+	fs.readdirSync(pagesPath)
+		.forEach((file) => {
+			files = [...files, ...processPages(file, regex)];
 		});
 
 	return files;
