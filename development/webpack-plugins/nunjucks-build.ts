@@ -5,7 +5,7 @@ const glob = require('glob');
 const marked = require('marked');
 const nunjucks = require('nunjucks');
 
-import { getPageFiles, SRC_FOLDER, camelCase } from './utils';
+import { getPageFiles, SRC_FOLDER } from './utils';
 
 /**
  * Set options for marked package.
@@ -62,7 +62,7 @@ export default class NunjucksBuild {
 
       let templateContent = nunjucksEnv.renderString(templateData, {
         global: JSON.parse(fs.readFileSync(globalDataPath, 'utf-8')),
-        [camelCase(dataName)]: pageData,
+        context: pageData,
       });
 
       compiler(

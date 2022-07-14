@@ -18,6 +18,7 @@ A simple and boilerplate to build web application (vanilla + typescript) and dep
     this folder contains nunjuck templating data.
     **To add new data for a new page:**
     1. you can simply create a new JSON file with the page name i.e. `about.json`.
+    2. you should be able to access the page data from `context` object.
     ```
 * `src` folder
     - **to create new page:**
