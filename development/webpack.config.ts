@@ -5,7 +5,7 @@ import * as MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import { ASSETS, DIST_FOLDER, ENTRIES, SRC_FOLDER } from './webpack-plugins/utils';
 import NunjucksBuild from './webpack-plugins/nunjucks-build';
 const ESLintPlugin = require('eslint-webpack-plugin');
-const CopyPlugin = require("copy-webpack-plugin");
+const CopyPlugin = require('copy-webpack-plugin');
 const compress = require('compression');
 const StylelintWebpackPlugin = require('stylelint-webpack-plugin');
 const SpriteLoaderPlugin = require('svg-sprite-loader/plugin');

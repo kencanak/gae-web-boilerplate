@@ -5,7 +5,7 @@ const glob = require('glob');
 const marked = require('marked');
 const nunjucks = require('nunjucks');
 
-import { getPageFiles, SRC_FOLDER } from "./utils";
+import { getPageFiles, SRC_FOLDER } from './utils';
 
 /**
  * Set options for marked package.

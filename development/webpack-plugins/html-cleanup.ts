@@ -6,7 +6,7 @@ const Critters = require('critters');
 const glob = require('glob');
 const { minify } = require('html-minifier-terser');
 
-import { DIST_FOLDER, MANIFEST_PATH } from "./utils";
+import { DIST_FOLDER, MANIFEST_PATH } from './utils';
 
 interface CriticalCSSOptions {
   path?: string,
