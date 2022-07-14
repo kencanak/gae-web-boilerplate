@@ -47,7 +47,7 @@ export default class NunjucksBuild {
     const pageHTML: Array<any> = getPageFiles(/.*\.njk$/);
 
     pageHTML.forEach(async (page) => {
-      const out = path.join(page.name === 'home' ? '' : page.name, 'index.html');
+      const out = path.join(page.path === 'home' ? '' : page.path, 'index.html');
 
       const templateData = fs.readFileSync(page.entry, 'utf8');
 

@@ -30,11 +30,14 @@ const processPages = (file: any, regex: any) => {
 				files = [...files, ...getSubPages.map((item: any) => item)];
 			} else if (fileName.match(regex)) {
 				const temp = `./${pagesPath}/${file}/${fileName}`;
+				const extension = path.extname(temp);
+				const actualFileName = path.basename(temp, extension);
 
 				files.push({
 					// file would be the page folder name
-					name: file,
+					name: actualFileName,
 					entry: temp,
+					path: file,
 				});
 			}
 		});
