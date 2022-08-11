@@ -1,4 +1,4 @@
-# gweb-project-pseudo (Python - Flask)
+# gae-project-pseudo (Python - Flask)
 
 This is the Gcloud App-engine bit of the app
 
