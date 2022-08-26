@@ -62,7 +62,11 @@ module.exports = (env: any, argv: any) => {
     rules: [
       {
         test: /\.ts$/,
-        loader: 'ts-loader',
+        loader: 'esbuild-loader',
+        options: {
+          loader: 'ts',
+          target: 'es2018'
+        },
       },
       {
         test: /\.s?css$/,
