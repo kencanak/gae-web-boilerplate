@@ -269,6 +269,7 @@ export default class HTMLCleanUp {
 
           templateContent = await minify(templateContent, {
             keepClosingSlash: true,
+            collapseWhitespace: true,
           });
 
           fs.writeFileSync(f, templateContent);
