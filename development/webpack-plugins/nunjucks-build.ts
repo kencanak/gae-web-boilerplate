@@ -4,8 +4,12 @@ import * as path from 'path';
 const glob = require('glob');
 const marked = require('marked');
 const nunjucks = require('nunjucks');
+const {loadDefaultJapaneseParser, loadDefaultSimplifiedChineseParser} = require('budoux');
 
 import { getPageFiles, getTemplateFiles, SRC_FOLDER } from './utils';
+
+const budouxJAParser = loadDefaultJapaneseParser();
+const budouxZHParser = loadDefaultSimplifiedChineseParser();
 
 const renderer = new marked.Renderer();
 
@@ -92,6 +96,12 @@ export default class NunjucksBuild {
     nunjucksEnv.addFilter('json', JSON.stringify);
     nunjucksEnv.addFilter('markdown', (val: string) => {
       return `<div class="marked">${marked.parse(val)}</div>`;
+    });
+    nunjucksEnv.addFilter('budouJA', (val: string) => {
+      return budouxJAParser.translateHTMLString(val);
+    });
+    nunjucksEnv.addFilter('budouZH', (val: string) => {
+      return budouxZHParser.translateHTMLString(val);
     });
 
     const pageHTML: Array<any> = getPageFiles(/.*\.njk$/);
