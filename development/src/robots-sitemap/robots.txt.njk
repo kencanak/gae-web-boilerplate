@@ -1,7 +1,13 @@
-User-agent: *
+{% for item in robots %}
+  User-agent: {{ item.userAgent }}
 
-{% for disallow in robots.disallows %}
-Disallow: {{disallow}}
+  {% for disallow in item.disallows %}
+  Disallow: {{disallow}}
+  {% endfor %}
+
+  {% for allow in item.allows %}
+  Allow: {{allow}}
+  {% endfor %}
 {% endfor %}
 
-Sitemap: {{global.site_canonical_url}}/sitemap.xml
+Sitemap: {{global.site_canonical_url}}sitemap.xml
