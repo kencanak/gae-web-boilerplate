@@ -18,6 +18,7 @@ const prodConfig = {
     new NunjucksNonHTMLBuild(),
     new HTMLCleanUp({
       criticalCSS: {},
+      purgeCSS: {},
     }),
   ],
   optimization: {

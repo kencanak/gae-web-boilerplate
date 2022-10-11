@@ -1,5 +1,18 @@
-{
-  "disallows": [
-    "/"
-  ]
-}
+[
+  {
+    "userAgent": "Googlebot",
+    "disallows": [
+      "/"
+    ]
+  },
+  {
+    "userAgent": "*",
+    "allows": [
+      "/"
+    ],
+    "disallows": [
+      "/404.html",
+      "/404"
+    ]
+  }
+]

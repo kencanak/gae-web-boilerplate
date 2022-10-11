@@ -13,6 +13,56 @@ A simple and boilerplate to build web application (vanilla + typescript) and dep
 * Webpack 5
 * BrowserSync
 
+## Built-in nunjucks filter
+1. markdown
+    - this filter will convert markdown content to markup content
+    - to use {{ content | markdown | safe }}
+    - youtube video embed support, if content format ``youtube: [Google Unconscious Bias Journey](_KfKmGb_bT4)``, this will render youtube iframe embed
+2. json
+    - this filter will convert string to JSON object
+    - to use {{ content | json }}
+3. budouJA
+    - this filter will spit out a legible line break for Japanese language. [ref](https://github.com/google/budoux/tree/main/javascript/)
+    - to use {{ content | budouJA | safe }}
+4. budouZH
+    - this filter will spit out a legible line break for Chinese language. [ref](https://github.com/google/budoux/tree/main/javascript/)
+    - to use {{ content | budouZH | safe }}
+
+## Code build
+by default:
+- all page build will be built with CSP compliance (i.e. applying nonce etc). to disable:
+  ```
+  1. go to webpack.config.prod.ts
+  2. new HTMLCleanUp({
+    cspCompliance: false,
+    criticalCSS: {},
+    purgeCSS: {},
+  }),
+  ```
+- all page build will be built with critical CSS, to disable:
+  ```
+   1. go to webpack.config.prod.ts
+   2. new HTMLCleanUp({
+      cspCompliance: false,
+      criticalCSS: null,
+      purgeCSS: {},
+   }),
+   ```
+
+  for more details on what options available, go to [here](https://github.com/GoogleChromeLabs/critters#readme)
+- all page build will be built with purgeCSS, to disable:
+  ```
+   1. go to webpack.config.prod.ts
+   2. new HTMLCleanUp({
+      cspCompliance: false,
+      criticalCSS: {},
+      purgeCSS: null,
+   }),
+   ```
+
+   for more details on what options available, go to [here](https://purgecss.com/introduction.html)
+
+
 ## Code structure
 * `data` folder
     this folder contains nunjuck templating data.
