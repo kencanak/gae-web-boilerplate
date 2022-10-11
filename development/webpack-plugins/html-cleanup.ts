@@ -5,6 +5,7 @@ const cheerio = require('cheerio');
 const Critters = require('critters');
 const glob = require('glob');
 const { minify } = require('html-minifier-terser');
+const { PurgeCSS } = require('purgecss');
 
 import { DIST_FOLDER, MANIFEST_PATH } from './utils';
 
@@ -28,9 +29,21 @@ interface CriticalCSSOptions {
   logger?: any,
 };
 
+interface PurgeCSSOptions {
+  variables?: boolean,
+  keyframes?: boolean,
+  fontFace?: boolean,
+  safelist?: {
+    standard?: Array<string>,
+    deep?: Array<string>,
+    greedy?: Array<string>,
+  },
+};
+
 interface HTMLCleanUpOptions {
   criticalCSS?: boolean | CriticalCSSOptions,
   cspCompliance?: boolean,
+  purgeCSS?: PurgeCSSOptions | null,
 };
 
 export default class HTMLCleanUp {
@@ -41,6 +54,16 @@ export default class HTMLCleanUp {
       publicPath: path.join(__dirname, '..', DIST_FOLDER, 'css'),
     },
     cspCompliance: true,
+    purgeCSS: {
+      varibles: true,
+      keyframes: true,
+      fontFace: true,
+      safelist: {
+        standard: ['svg-sprite'],
+        deep: [],
+        greedy: []
+      },
+    },
   };
 
   options: HTMLCleanUpOptions = {};
@@ -65,6 +88,15 @@ export default class HTMLCleanUp {
       this.critters = new Critters(this.options.criticalCSS);
     }
 
+    if (options.purgeCSS && typeof options.purgeCSS === 'object') {
+      this.options.purgeCSS = {
+        ...HTMLCleanUp.defaultOptions.purgeCSS,
+        ...options.purgeCSS,
+      };
+    } else {
+      this.options.purgeCSS = null;
+    }
+
     if (typeof options.cspCompliance === 'boolean') {
       this.options.cspCompliance = options.cspCompliance;
     }
@@ -87,9 +119,29 @@ export default class HTMLCleanUp {
     // Specify the event hook to attach to
     compiler.hooks.done.tapAsync(
       'HTMLCleanUpWebpackPlugin',
-      (compilation: any, callback: Function) => {
+      async (compilation: any, callback: Function) => {
         if (!this.manifest) {
           this.manifest = require(MANIFEST_PATH);
+        }
+
+        if (this.options.purgeCSS) {
+          // begin purging css based on build file NOT nunjucks template file
+          const purgeCSSResult = await new PurgeCSS().purge({
+            content: [
+              path.join(__dirname, '..', DIST_FOLDER, '**/*.html'),
+              path.join(__dirname, '..', DIST_FOLDER, '**/*.js')
+            ],
+            css: glob.sync(path.join(__dirname, '..', DIST_FOLDER, '**/*.css'), {
+              absolute: true,
+            }),
+            ...this.options.purgeCSS,
+          });
+
+          purgeCSSResult.forEach((res: any) => {
+            const {file, css} = res;
+
+            fs.writeFileSync(file, css);
+          });
         }
 
         const filesToWatch = glob.sync(path.join(__dirname, '..', DIST_FOLDER, '**/*.html'), {
