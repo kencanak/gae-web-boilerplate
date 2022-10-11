@@ -41,7 +41,7 @@ interface PurgeCSSOptions {
 };
 
 interface HTMLCleanUpOptions {
-  criticalCSS?: boolean | CriticalCSSOptions,
+  criticalCSS?: CriticalCSSOptions | null,
   cspCompliance?: boolean,
   purgeCSS?: PurgeCSSOptions | null,
 };
