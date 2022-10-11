@@ -7,6 +7,8 @@ const nunjucks = require('nunjucks');
 
 import { getPageFiles, getTemplateFiles, SRC_FOLDER } from './utils';
 
+const renderer = new marked.Renderer();
+
 /**
  * Set options for marked package.
  * `gfm` needs to be `true` in order for `breaks: true` to work:
@@ -16,6 +18,52 @@ marked.setOptions({
   gfm: true,
   breaks: true,
 });
+
+const videoBlock = {
+  name: 'videoBlock',
+  level: 'block',
+  start(src: string) {
+    return src.match(/`(video|youtube): \[(.*?)\]\((.*?)\)`/)?.index;
+  },
+  tokenizer(src: string, tokens: any) {
+    const rule = /^`(video|youtube): \[(.*?)\]\((.*?)\)`/; // Regex for the complete token, anchor to string start
+    const match = rule.exec(src);
+    if (match) {
+      let type = match[1];
+      return {
+        // Token to generate
+        type: 'videoBlock', // Should match "name" above
+        raw: match[0],
+        videoType: type,
+        title: match[2],
+        url: match[3],
+      };
+    }
+
+    return null;
+  },
+  renderer(token: Record<string, any>) {
+    switch (token.videoType) {
+      case 'video':
+        return `<h3>${token.title}</h3><div class="marked-video"><video src="${token.url}" preload="auto" autoplay="" style="width: 560px; height: 315px;"></video></div>`;
+      case 'youtube':
+        return `<div class="marked-video"><iframe width="560" height="315" src="https://www.youtube.com/embed/${token.url}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>`;
+      default:
+        return '';
+    }
+  },
+};
+
+renderer.link = function (
+  href: Record<string, any>,
+  title: Record<string, any>,
+  text: Record<string, any>
+) {
+  return `<a href="${href}" target="_blank">${text}</a>`;
+};
+
+// add custom extension for markdown
+marked.use({extensions: [videoBlock], renderer: renderer});
 
 
 export default class NunjucksBuild {
@@ -42,7 +90,9 @@ export default class NunjucksBuild {
       new nunjucks.FileSystemLoader([`./src`, `./src/components`, `./src/pages`, `./src/templates`])
     );
     nunjucksEnv.addFilter('json', JSON.stringify);
-    nunjucksEnv.addFilter('markdown', marked.parse);
+    nunjucksEnv.addFilter('markdown', (val: string) => {
+      return `<div class="marked">${marked.parse(val)}</div>`;
+    });
 
     const pageHTML: Array<any> = getPageFiles(/.*\.njk$/);
 
