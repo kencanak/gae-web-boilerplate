@@ -23,6 +23,9 @@ handlers:
     secure: always
     script: auto
 
+inbound_services:
+- warmup
+
 env_variables:
   FLASK_SETTINGS_FILENAME: "settings.py"
 

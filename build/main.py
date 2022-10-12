@@ -17,6 +17,12 @@ client.setup_logging()
 app.register_blueprint(frontend)
 
 
+@app.route('/_ah/warmup')
+def warmup():
+    # Handle your warmup logic here, e.g. set up a database connection pool
+    return '', 200, {}
+
+
 @app.errorhandler(404)
 def not_found(_error):
     """
