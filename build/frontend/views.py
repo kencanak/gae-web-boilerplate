@@ -1,5 +1,6 @@
 import logging
-from flask import Blueprint, render_template, make_response
+from flask import Blueprint, render_template, make_response, abort
+from jinja2 import exceptions
 
 logger = logging.getLogger(__name__)
 
@@ -81,7 +82,10 @@ def serve(path):
 
         return frontend.send_static_file(path)
 
-    res = _setNoCacheHeader(
-        make_response(render_template(get_file_path_from_url(path)))
-    )
-    return res
+    try:
+        res = _setNoCacheHeader(
+            make_response(render_template(get_file_path_from_url(path)))
+        )
+        return res
+    except exceptions.TemplateNotFound:
+        abort(404)
