@@ -248,11 +248,17 @@ export default class HTMLCleanUp {
             // to be tested
 
             const inlineStyles: Array<string> = [];
+            const styleCache: Record<string, string> = {};
             $('[style]').each((i: number, elem: HTMLElement) => {
-              const className = `inline-style-${i}`;
+              let className = `inline-style-${i}`;
 
               const elemStyle = $(elem).attr('style');
-              inlineStyles.push(`.${className} {${elemStyle}}`);
+              if (!styleCache[elemStyle]) {
+                styleCache[elemStyle] = className;
+                inlineStyles.push(`.${className} {${elemStyle}}`);
+              } else {
+                className = styleCache[elemStyle];
+              }
 
               const currentClass = $(elem).attr('class')
 
