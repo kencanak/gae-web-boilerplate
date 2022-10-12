@@ -2,6 +2,7 @@ import google.cloud.logging
 
 from frontend.views import frontend
 from app import app
+from flask import render_template
 
 # Instantiates a client
 client = google.cloud.logging.Client()
@@ -16,6 +17,12 @@ client.setup_logging()
 app.register_blueprint(frontend)
 
 
+@app.route('/_ah/warmup')
+def warmup():
+    # Handle your warmup logic here, e.g. set up a database connection pool
+    return '', 200, {}
+
+
 @app.errorhandler(404)
 def not_found(_error):
     """
@@ -27,4 +34,4 @@ def not_found(_error):
     See static_site/src/pages.py:NotFoundPage for where this is
     defined.
     """
-    return 'not found', 404
+    return render_template("404/index.html"), 404
