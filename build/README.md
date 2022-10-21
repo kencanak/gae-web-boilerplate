@@ -22,7 +22,7 @@ Activate the env:
 
 And install the dependencies:
 
-    pip install -r requirements.txt
+    pip install -r requirements.txt --require-hashes
 
 Build the static page (if it's not done yet):
 
