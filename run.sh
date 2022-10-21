@@ -47,9 +47,9 @@ case "$1" in
 
         cd build
 
-        pip install virtualenv
+        pip install virtualenv --require-hashes
         # prep api dev env
-        virtualenv env -p python3 && source env/bin/activate && pip install -r requirements.txt
+        virtualenv env -p python3 && source env/bin/activate && pip install -r requirements.txt --require-hashes
 
         export GOOGLE_CLOUD_PROJECT=$STAGING_APP_ID
 
@@ -137,9 +137,9 @@ case "$1" in
 
         cd build
 
-        pip install virtualenv
+        pip install virtualenv --require-hashes
         # prep build dev env
-        virtualenv env -p python3 && source env/bin/activate && pip install -r requirements.txt
+        virtualenv env -p python3 && source env/bin/activate && pip install -r requirements.txt --require-hashes
 
         # run linting
         env/bin/python -m flake8
