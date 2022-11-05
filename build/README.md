@@ -20,6 +20,16 @@ Activate the env:
 
     source env/bin/activate
 
+Install pip-tools, it must be installed in the project’s virtual environment:
+
+    pip install pip-tools
+
+Generate hashes:
+- The `--resolver` flag is required to resolve protbuf conflicts (https://github.com/jazzband/pip-tools/issues/1680#issuecomment-1253079108)
+- The `--allow-unsafe` flag is to resolve unpinned `setuptools` inside `google-auth` package:
+
+    pip-compile --allow-unsafe --generate-hashes --resolver=backtracking requirements.in
+
 And install the dependencies:
 
     pip install -r requirements.txt --require-hashes
