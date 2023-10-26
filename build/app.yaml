@@ -1,4 +1,4 @@
-runtime: python37
+runtime: python39
 instance_class: F2
 
 default_expiration: "0d 0h"
