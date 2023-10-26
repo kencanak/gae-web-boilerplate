@@ -47,9 +47,11 @@ case "$1" in
 
         cd build
 
+        rm -rf requirements.txt
+
         pip install virtualenv --require-hashes
         # prep api dev env
-        virtualenv env -p python3 && source env/bin/activate && pip install -r requirements.txt --require-hashes
+        virtualenv env -p python3 && source env/bin/activate && python -m pip install pip-tools && pip-compile --allow-unsafe --generate-hashes --resolver=backtracking requirements.in && pip install -r requirements.txt --require-hashes
 
         export GOOGLE_CLOUD_PROJECT=$STAGING_APP_ID
 

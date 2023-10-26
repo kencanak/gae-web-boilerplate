@@ -12,13 +12,16 @@ As we're using Python 3 make sure you have it
 installed. You can find it at
 [https://www.python.org/downloads/](https://www.python.org/downloads/).
 
-Create a Python 3 virtualenv with:
+Install pip-tools, it must be installed in each of your project’s virtual environments:
 
-    virtualenv env -p python3
+    python -m pip install pip-tools
 
-Activate the env:
+Generate hashes:
+- The `--resolver` flag is required to resolve protbuf conflicts (https://github.com/jazzband/pip-tools/issues/1680#issuecomment-1253079108)
+- The `--allow-unsafe` flag is to resolve unpinned `setuptools` inside `google-auth` package:
 
-    source env/bin/activate
+    `pip-compile --allow-unsafe --generate-hashes --resolver=backtracking requirements.in`
+
 
 And install the dependencies:
 
