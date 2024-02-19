@@ -21,9 +21,9 @@ case "$1" in
         echo "running local dev server"
 
         cd development
-        nvm use 14.19.0
+        nvm use
 
-        npm install
+        npm install --legacy-peer-deps
 
         npm run dev
       ;;
@@ -37,8 +37,8 @@ case "$1" in
         cd development
 
         # make sure all packages are installed
-        nvm use 14.19.0
-        npm install
+        nvm use
+        npm install --legacy-peer-deps
 
         rm -rf dist
         npm run build
@@ -124,8 +124,8 @@ case "$1" in
         cd development
 
         # make sure all packages are installed
-        nvm use 14.19.0
-        npm install
+        nvm use
+        npm install --legacy-peer-deps
 
         # remove build folder
         rm -rf dist
