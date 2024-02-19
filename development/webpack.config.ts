@@ -1,6 +1,6 @@
 import * as path from 'path';
-import * as OptimizeCSSAssetsPlugin from 'optimize-css-assets-webpack-plugin';
 import * as MiniCssExtractPlugin from 'mini-css-extract-plugin';
+import * as CssMinimizerPlugin from "css-minimizer-webpack-plugin";
 import { ASSETS, DIST_FOLDER, ENTRIES, SRC_FOLDER } from './webpack-plugins/utils';
 import NunjucksBuild from './webpack-plugins/nunjucks-build';
 const ESLintPlugin = require('eslint-webpack-plugin');
@@ -121,7 +121,7 @@ module.exports = (env: any, argv: any) => {
     optimization: {
       concatenateModules: false,
       minimizer: [
-        new OptimizeCSSAssetsPlugin({}),
+        new CssMinimizerPlugin({}),
       ],
     },
     performance: {

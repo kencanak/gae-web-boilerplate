@@ -23,7 +23,7 @@ case "$1" in
         cd development
         nvm use
 
-        npm install --legacy-peer-deps
+        npm install
 
         npm run dev
       ;;
@@ -38,7 +38,7 @@ case "$1" in
 
         # make sure all packages are installed
         nvm use
-        npm install --legacy-peer-deps
+        npm install
 
         rm -rf dist
         npm run build
@@ -125,7 +125,7 @@ case "$1" in
 
         # make sure all packages are installed
         nvm use
-        npm install --legacy-peer-deps
+        npm install
 
         # remove build folder
         rm -rf dist
