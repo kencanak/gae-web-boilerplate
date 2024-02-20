@@ -17,7 +17,6 @@ A simple and boilerplate to build web application (vanilla + typescript) and dep
 2. Typescript
 3. SASS for CSS pre-processor
 4. Webpack 5
-5. BrowserSync
 
 ## Code structure
 Project divided into 2 section:
@@ -72,3 +71,25 @@ make sure your user account has the following access role:
 - Storage Object Admin
 
 you can go to [GCloud console](https://console.cloud.google.com/iam-admin/iam?serviceId=default&project=[PROJECT_ID]), to assign the roles
+
+## Docker
+This serves as a testing ground for experiments. The primary goal is to ensure compatibility with various machines during development. I've noticed challenges in properly installing packages on different machines, particularly between non-silicon and silicon Mac devices.
+
+### Pre-requisite
+- install docker engine [ref](https://docs.docker.com/engine/install/)
+
+### NOTE:
+- Using the combination of the `--build` and `--force-recreate` flags ensures that the system consistently fetches the most recent updates, rebuilds the image, and executes it.
+- BEFORE running local static build / deployment, make sure you are logged in into gcloud.
+
+### running local dev (with HOT RELOAD)
+`docker compose -f docker-compose-dev.yaml -p dev-docker up --build --force-recreate`
+
+### running local static build (WITHOUT HOT RELOAD)
+`docker compose -f docker-compose-static-dev.yaml -p dev-docker up --build --force-recreate`
+
+### deploying (NOT TESTED, YET)
+technically, this should be handled by the pipelines, i.e github action. should you need to run the build locally, you will need to:
+- build the docker image `docker build -t [name] .`
+- run the docker image, `docker run -d [name] --mount ~/.config/gcloud:/root/.config/gcloud deploy -m [app/module name] -t [staging/production]`
+

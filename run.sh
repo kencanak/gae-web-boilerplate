@@ -6,9 +6,6 @@ set -o errexit -o nounset
 STAGING_APP_ID="[GCLOUD STAGING PROJECT ID]"
 PRODUCTION_APP_ID="[GCLOUD PRODUCTION PROJECT ID]"
 
-# sourcing nvm
-. "$NVM_DIR/nvm.sh"
-
 if [ -f ./build/.env ]; then
   export $(echo $(cat ./build/.env | sed 's/#.*//g'| xargs) | envsubst)
 fi
@@ -21,7 +18,6 @@ case "$1" in
         echo "running local dev server"
 
         cd development
-        nvm use
 
         npm install
 
@@ -37,7 +33,6 @@ case "$1" in
         cd development
 
         # make sure all packages are installed
-        nvm use
         npm install
 
         rm -rf dist
@@ -51,7 +46,7 @@ case "$1" in
 
         pip install virtualenv --require-hashes
         # prep api dev env
-        virtualenv env -p python3 && source env/bin/activate && python -m pip install pip-tools && pip-compile --allow-unsafe --generate-hashes --resolver=backtracking requirements.in && pip install -r requirements.txt --require-hashes
+        virtualenv env -p python3 && source env/bin/activate && python -m pip install pip-tools && pip install --upgrade pip && pip-compile --allow-unsafe --generate-hashes --resolver=backtracking requirements.in && pip install -r requirements.txt --require-hashes
 
         export GOOGLE_CLOUD_PROJECT=$STAGING_APP_ID
 
@@ -124,7 +119,6 @@ case "$1" in
         cd development
 
         # make sure all packages are installed
-        nvm use
         npm install
 
         # remove build folder

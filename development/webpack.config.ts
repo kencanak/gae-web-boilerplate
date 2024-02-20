@@ -10,6 +10,14 @@ const SpriteLoaderPlugin = require('svg-sprite-loader/plugin');
 
 module.exports = (env: any, argv: any) => {
   const isProd = argv.mode === 'production';
+
+  const dockerFlavoredConfig = process.env.DOCKER === "1" ? {
+    watchOptions: {
+      aggregateTimeout: 200,
+      poll: 1000,
+    }
+  } : {};
+
   return {
     mode: 'development',
     entry: ENTRIES,
@@ -83,12 +91,15 @@ module.exports = (env: any, argv: any) => {
       extensions: ['.ts', '.js']
     },
     target: 'web',
+    ...dockerFlavoredConfig,
     output: {
       path: path.join(__dirname, DIST_FOLDER),
       filename: `js/[name]${isProd ? '.[contenthash:5].min' : ''}.js`,
       clean: true,
     },
     devServer: {
+      host: '0.0.0.0',
+      allowedHosts: 'all',
       static: {
         directory: path.join(__dirname, DIST_FOLDER),
       },

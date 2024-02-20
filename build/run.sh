@@ -27,4 +27,4 @@ fi
 # Start your local development server.
 # export GOOGLE_CLOUD_PROJECT=$STAGING_APP_ID
 export FLASK_SETTINGS_FILENAME="settings.py"
-FLASK_ENV="$FLASK_ENV" FLASK_APP="$FLASK_APP" flask run
+FLASK_ENV="$FLASK_ENV" FLASK_APP="$FLASK_APP" flask run --host=0.0.0.0

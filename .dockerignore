@@ -1,0 +1,8 @@
+node_modules
+.gitignore
+Dockerfile
+LICENSE
+README.md
+**/env
+**/node_modules/
+**/dist

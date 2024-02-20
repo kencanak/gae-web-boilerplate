@@ -1,6 +1,6 @@
 {
   "name": "gae-web-boilerplate",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "vanilla front-end development boilerplate",
   "repository": {
     "type": "git",
@@ -13,8 +13,8 @@
   },
   "homepage": "https://github.com/kencanak/gae-web-boilerplate#readme",
   "engines": {
-    "node": "18.17.0",
-    "npm": "9.6.7"
+    "node": "18.19.1",
+    "npm": "10.2.4"
   },
   "scripts": {
     "dev": "npm run webpack:watch",
