@@ -1,17 +1,23 @@
 import * as path from 'path';
-import * as OptimizeCSSAssetsPlugin from 'optimize-css-assets-webpack-plugin';
-import * as BrowserSyncPlugin from 'browser-sync-webpack-plugin';
 import * as MiniCssExtractPlugin from 'mini-css-extract-plugin';
+import * as CssMinimizerPlugin from "css-minimizer-webpack-plugin";
 import { ASSETS, DIST_FOLDER, ENTRIES, SRC_FOLDER } from './webpack-plugins/utils';
 import NunjucksBuild from './webpack-plugins/nunjucks-build';
 const ESLintPlugin = require('eslint-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
-const compress = require('compression');
 const StylelintWebpackPlugin = require('stylelint-webpack-plugin');
 const SpriteLoaderPlugin = require('svg-sprite-loader/plugin');
 
 module.exports = (env: any, argv: any) => {
   const isProd = argv.mode === 'production';
+
+  const dockerFlavoredConfig = process.env.DOCKER === "1" ? {
+    watchOptions: {
+      aggregateTimeout: 200,
+      poll: 1000,
+    }
+  } : {};
+
   return {
     mode: 'development',
     entry: ENTRIES,
@@ -84,14 +90,22 @@ module.exports = (env: any, argv: any) => {
     resolve: {
       extensions: ['.ts', '.js']
     },
+    target: 'web',
+    ...dockerFlavoredConfig,
     output: {
       path: path.join(__dirname, DIST_FOLDER),
       filename: `js/[name]${isProd ? '.[contenthash:5].min' : ''}.js`,
       clean: true,
     },
     devServer: {
-      static: path.join(__dirname, DIST_FOLDER),
+      host: '0.0.0.0',
+      allowedHosts: 'all',
+      static: {
+        directory: path.join(__dirname, DIST_FOLDER),
+      },
       hot: true,
+      liveReload: true,
+      watchFiles: [path.join(__dirname, SRC_FOLDER), path.join(__dirname, DIST_FOLDER)],
     },
     plugins: [
       new ESLintPlugin({
@@ -114,23 +128,11 @@ module.exports = (env: any, argv: any) => {
           };
         }),
       }),
-      // Browsersync for develpment server, only runs with --watch flag.
-      new BrowserSyncPlugin({
-        host: 'localhost',
-        port: 3000,
-        // proxy the Webpack Dev Server endpoint
-        // through BrowserSync
-        proxy: 'http://localhost:8080/',
-        notify: false,
-        middleware: [compress()],
-        reloadDelay: 200,
-        open: false,
-      }),
     ],
     optimization: {
       concatenateModules: false,
       minimizer: [
-        new OptimizeCSSAssetsPlugin({}),
+        new CssMinimizerPlugin({}),
       ],
     },
     performance: {

@@ -2,16 +2,15 @@
 A simple and boilerplate to build web application (vanilla + typescript) and deploy it to Google App Engine.
 
 ## Pre-requisite
-* [Node](https://nodejs.org/en/) 14.19.1 / [npm](https://www.npmjs.com/) 6.14.16
+* [Node](https://nodejs.org/en/) 18.19.1 / [npm](https://www.npmjs.com/) 10.2.4
     * Recommend installing with [nvm](https://github.com/creationix/nvm)
-* [Webpack] 5.70.0 (https://webpack.js.org/)
+* [Webpack] 5.90.2 (https://webpack.js.org/)
 
 ## Stacks
 * Nunjucks
 * Typescript
 * SASS for CSS pre-processor
 * Webpack 5
-* BrowserSync
 
 ## Built-in nunjucks filter
 1. markdown

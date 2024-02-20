@@ -1,0 +1,14 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 5000:5000
+    volumes:
+      - .:/app
+      # this is to run static build, pass along local gcloud creds
+      - ~/.config/gcloud:/root/.config/gcloud
+    command:
+      - dev
+      - static-build
